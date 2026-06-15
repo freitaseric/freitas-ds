@@ -1,0 +1,16 @@
+{
+  "name": "@freitas-ds/styles",
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    "./index.css": "./src/index.css"
+  },
+  "scripts": {
+    "build": "echo \"No build needed for @freitas-ds/styles\"",
+    "typecheck": "echo \"No typecheck needed for @freitas-ds/styles\"",
+    "clean": "echo \"No clean needed for @freitas-ds/styles\""
+  },
+  "peerDependencies": {
+    "tailwindcss": ">=4"
+  }
+}
