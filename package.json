@@ -1,0 +1,39 @@
+{
+  "name": "freitas-ds",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "pnpm --filter @freitas-ds/dashboard dev",
+    "build": "pnpm -r build",
+    "storybook": "pnpm --filter storybook dev",
+    "build:storybook": "pnpm --filter storybook build",
+    "typecheck": "pnpm -r typecheck",
+    "clean": "pnpm -r clean",
+    "lint": "biome lint .",
+    "format": "biome format --write .",
+    "check": "biome check .",
+    "test": "pnpm --filter @freitas-ds/react test",
+    "test:watch": "pnpm --filter @freitas-ds/react test:watch",
+    "test:coverage": "pnpm --filter @freitas-ds/react test:coverage",
+    "quality": "pnpm check && pnpm typecheck && pnpm test && pnpm build",
+    "quality:full": "pnpm check && pnpm typecheck && pnpm test && pnpm build && pnpm build:storybook"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Eric Freitas Sampaio",
+    "email": "contato@freitaseric.com",
+    "url": "https://freitaseric.com"
+  },
+  "license": "MIT",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "^11.3.0",
+      "onFail": "download"
+    }
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.0"
+  }
+}
