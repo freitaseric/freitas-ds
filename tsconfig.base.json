@@ -11,6 +11,12 @@
     "declarationMap": true,
     "sourceMap": true,
     "isolatedModules": true,
+    "ignoreDeprecations": "6.0",
+    "baseUrl": ".",
+    "paths": {
+      "@freitas-ds/react": ["packages/react/src/index.ts"],
+      "@freitas-ds/theme": ["packages/theme/src/index.ts"]
+    },
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true
   }

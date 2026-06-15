@@ -9,7 +9,7 @@
     "storybook": "pnpm --filter storybook dev",
     "build:storybook": "pnpm --filter storybook build",
     "typecheck": "pnpm -r typecheck",
-    "clean": "pnpm -r clean",
+    "clean": "pnpm -r run clean",
     "lint": "biome lint .",
     "format": "biome format --write .",
     "check": "biome check .",
