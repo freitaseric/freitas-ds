@@ -70,6 +70,7 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
           id={id}
           aria-describedby={ariaDescribedBy}
           aria-invalid={ariaInvalid}
+          aria-required={required ? true : undefined}
           className={cn(
             "flex h-9 w-full items-center justify-between gap-2 whitespace-nowrap",
             "rounded-fds-md border border-input bg-transparent px-3 py-2",

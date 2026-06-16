@@ -52,6 +52,7 @@ export const WithDescriptions: Story = {
       <FormField
         label="Produtor atendido"
         helperText="Busque por nome, CPF ou localidade."
+        required
       >
         <Combobox
           placeholder="Selecione o produtor"

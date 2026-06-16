@@ -3,6 +3,7 @@ import { Check } from "lucide-react"
 import * as React from "react"
 
 import { cn } from "../utils/cn"
+import { Label } from "./label"
 
 export type CheckboxProps = React.ComponentPropsWithoutRef<
   typeof CheckboxPrimitive.Root
@@ -74,22 +75,13 @@ export function CheckboxField({
         />
 
         <div className="grid gap-1 leading-none">
-          <label
+          <Label
             htmlFor={fieldId}
-            className={cn(
-              "body-sm font-medium text-on-surface",
-              props.disabled && "cursor-not-allowed opacity-60"
-            )}
+            required={required}
+            className={cn(props.disabled && "cursor-not-allowed opacity-60")}
           >
             {label}
-
-            {required ? (
-              <span className="text-destructive" aria-hidden="true">
-                {" "}
-                *
-              </span>
-            ) : null}
-          </label>
+          </Label>
 
           {description ? (
             <p id={descriptionId} className="caption text-muted">

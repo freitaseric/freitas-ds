@@ -6,6 +6,7 @@ import { Label } from "./label"
 type FieldControlProps = {
   id?: string
   required?: boolean
+  "aria-required"?: boolean | "true" | "false"
   "aria-describedby"?: string
   "aria-invalid"?: boolean | "true" | "false"
 }
@@ -42,21 +43,15 @@ export function FormField({
   const control = React.cloneElement(child, {
     id: child.props.id ?? fieldId,
     required: child.props.required ?? required,
+    "aria-required": child.props["aria-required"] ?? (required ? true : undefined),
     "aria-describedby": describedBy,
     "aria-invalid": error ? true : child.props["aria-invalid"]
   })
 
   return (
     <div className={cn("flex w-full flex-col gap-1.5", className)}>
-      <Label htmlFor={fieldId}>
+      <Label htmlFor={fieldId} required={required}>
         {label}
-
-        {required ? (
-          <span className="text-error" aria-hidden="true">
-            {" "}
-            *
-          </span>
-        ) : null}
       </Label>
 
       {control}

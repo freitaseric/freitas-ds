@@ -2,6 +2,7 @@ import * as SwitchPrimitive from "@radix-ui/react-switch"
 import * as React from "react"
 
 import { cn } from "../utils/cn"
+import { Label } from "./label"
 
 export type SwitchProps = React.ComponentPropsWithoutRef<typeof SwitchPrimitive.Root> & {
   error?: boolean
@@ -67,22 +68,13 @@ export function SwitchField({
     <div className={cn("flex flex-col gap-1.5", className)}>
       <div className="flex items-start justify-between gap-4 rounded-fds-md border border-border p-3">
         <div className="grid gap-1">
-          <label
+          <Label
             htmlFor={fieldId}
-            className={cn(
-              "body-sm font-medium text-on-surface",
-              props.disabled && "cursor-not-allowed opacity-60"
-            )}
+            required={required}
+            className={cn(props.disabled && "cursor-not-allowed opacity-60")}
           >
             {label}
-
-            {required ? (
-              <span className="text-destructive" aria-hidden="true">
-                {" "}
-                *
-              </span>
-            ) : null}
-          </label>
+          </Label>
 
           {description ? (
             <p id={descriptionId} className="caption text-muted">

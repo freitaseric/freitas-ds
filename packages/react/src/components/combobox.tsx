@@ -40,6 +40,7 @@ export type ComboboxProps = {
 
   "aria-describedby"?: string
   "aria-invalid"?: boolean | "true" | "false"
+  "aria-label"?: string
 }
 
 function isGroupedOptions(options: ComboboxOptions): options is ComboboxGroup[] {
@@ -76,7 +77,8 @@ export const Combobox = React.forwardRef<HTMLButtonElement, ComboboxProps>(
       contentClassName,
 
       "aria-describedby": ariaDescribedBy,
-      "aria-invalid": ariaInvalid
+      "aria-invalid": ariaInvalid,
+      "aria-label": ariaLabel
     },
     ref
   ) => {
@@ -110,11 +112,14 @@ export const Combobox = React.forwardRef<HTMLButtonElement, ComboboxProps>(
             ref={ref}
             id={id}
             type="button"
+            role="combobox"
             disabled={disabled}
+            aria-label={ariaLabel ?? selectedOption?.label ?? placeholder}
             aria-haspopup="listbox"
             aria-expanded={open}
             aria-describedby={ariaDescribedBy}
             aria-invalid={ariaInvalid}
+            aria-required={required ? true : undefined}
             className={cn(
               "flex h-9 w-full items-center justify-between gap-2 whitespace-nowrap",
               "rounded-fds-md border border-input bg-transparent px-3 py-2",

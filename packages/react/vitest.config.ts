@@ -6,6 +6,7 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
+      "@freitas-ds/react": fileURLToPath(new URL("./src/index.ts", import.meta.url)),
       "@freitas-ds/theme": fileURLToPath(
         new URL("../theme/src/index.ts", import.meta.url)
       )

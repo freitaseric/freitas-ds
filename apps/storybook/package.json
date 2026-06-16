@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "@freitas-ds/react": "workspace:*",
-    "@freitas-ds/styles": "workspace:*",
     "@freitas-ds/theme": "workspace:*",
+    "freitas-ds": "workspace:*",
     "react": "^19.2.7",
     "react-dom": "^19.2.7"
   },
@@ -26,6 +26,7 @@
     "@vitejs/plugin-react": "^6.0.2",
     "storybook": "^10.4.4",
     "typescript": "^6.0.3",
-    "vite": "^8.0.16"
+    "vite": "^8.0.16",
+    "zod": "^4.4.3"
   }
 }

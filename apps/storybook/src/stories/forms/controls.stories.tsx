@@ -21,6 +21,7 @@ export const Controls: Story = {
         <CheckboxField
           label="Receber notificações"
           description="Enviar avisos sobre novos atendimentos."
+          required
           defaultChecked
         />
       </StorySurface>
@@ -37,6 +38,7 @@ export const Controls: Story = {
         <SwitchField
           label="Modo de fiscalização"
           description="Ativa campos adicionais no formulário."
+          required
           defaultChecked
         />
       </StorySurface>

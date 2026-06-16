@@ -28,6 +28,7 @@ export const NativeSelectStory: Story = {
       <FormField
         label="Tipo de organização"
         helperText="Use para listas pequenas e fixas."
+        required
       >
         <NativeSelect placeholder="Selecione" options={options} />
       </FormField>
@@ -42,6 +43,7 @@ export const SelectStory: Story = {
       <FormField
         label="Tipo de atendimento"
         helperText="Use para listas simples ou médias, sem busca."
+        required
       >
         <Select placeholder="Selecione" options={options} />
       </FormField>

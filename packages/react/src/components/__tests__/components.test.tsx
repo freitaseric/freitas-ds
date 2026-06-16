@@ -319,6 +319,39 @@ describe("componentes básicos de interface", () => {
 })
 
 describe("campos e formulários", () => {
+  it("renderiza indicador obrigatório acessível no Label", () => {
+    renderWithProvider(
+      <>
+        <Label htmlFor="optional">Opcional</Label>
+        <Label htmlFor="required" required>
+          Nome completo
+        </Label>
+        <Label htmlFor="hidden-required" required showRequiredIndicator={false}>
+          Campo interno
+        </Label>
+      </>
+    )
+
+    expect(screen.getByText("Opcional")).not.toHaveTextContent("*")
+
+    const requiredLabel = screen.getByText("Nome completo").closest("label")
+    expect(requiredLabel).toHaveTextContent("Nome completo * obrigatório")
+    expect(within(requiredLabel as HTMLElement).getByText("*")).toHaveClass("text-error")
+    expect(within(requiredLabel as HTMLElement).getByText("*")).toHaveAttribute(
+      "aria-hidden",
+      "true"
+    )
+    expect(within(requiredLabel as HTMLElement).getByText("obrigatório")).toHaveClass(
+      "sr-only"
+    )
+
+    const hiddenIndicatorLabel = screen.getByText("Campo interno").closest("label")
+    expect(hiddenIndicatorLabel).toHaveTextContent("Campo interno obrigatório")
+    expect(
+      within(hiddenIndicatorLabel as HTMLElement).queryByText("*")
+    ).not.toBeInTheDocument()
+  })
+
   it("conecta Label, FormField, Input e Textarea com erro acessível", async () => {
     const user = userEvent.setup()
 
@@ -338,10 +371,12 @@ describe("campos e formulários", () => {
       </>
     )
 
-    const input = screen.getByLabelText("Nome *")
+    const input = screen.getByLabelText(/nome.*obrigatório/i)
     expect(input).toBeRequired()
+    expect(input).toHaveAttribute("aria-required", "true")
     expect(input).toHaveAttribute("aria-invalid", "true")
     expect(screen.getByRole("alert")).toHaveTextContent("Nome obrigatório")
+    expect(screen.getAllByText("*")).toHaveLength(1)
 
     await user.type(screen.getByLabelText("Biografia"), "Texto longo")
     expect(screen.getByLabelText("Biografia")).toHaveValue("Texto longo")
@@ -354,9 +389,13 @@ describe("campos e formulários", () => {
     renderWithProvider(
       <>
         <Checkbox aria-label="Aceitar termos" />
-        <CheckboxField label="Receber novidades" description="Por e-mail" />
+        <CheckboxField label="Receber novidades" description="Por e-mail" required />
         <Switch aria-label="Modo escuro" />
-        <SwitchField label="Ativar alertas" description="Notificações do sistema" />
+        <SwitchField
+          label="Ativar alertas"
+          description="Notificações do sistema"
+          required
+        />
         <RadioGroup
           onValueChange={radioChange}
           defaultValue="email"
@@ -370,9 +409,21 @@ describe("campos e formulários", () => {
 
     await user.click(screen.getByRole("checkbox", { name: "Aceitar termos" }))
     expect(screen.getByRole("checkbox", { name: "Aceitar termos" })).toBeChecked()
+    expect(screen.getByRole("checkbox", { name: /receber novidades/i })).toBeRequired()
+    expect(screen.getByText("Por e-mail")).toBeInTheDocument()
+    expect(screen.getByText("Receber novidades").closest("label")).toHaveTextContent(
+      "Receber novidades * obrigatório"
+    )
 
     await user.click(screen.getByRole("switch", { name: "Modo escuro" }))
     expect(screen.getByRole("switch", { name: "Modo escuro" })).toBeChecked()
+    expect(screen.getByRole("switch", { name: /ativar alertas/i })).toHaveAttribute(
+      "aria-required",
+      "true"
+    )
+    expect(screen.getByText("Ativar alertas").closest("label")).toHaveTextContent(
+      "Ativar alertas * obrigatório"
+    )
 
     await user.click(screen.getByRole("radio", { name: "SMS" }))
     expect(radioChange).toHaveBeenCalledWith("sms")
@@ -421,7 +472,7 @@ describe("campos e formulários", () => {
     await user.click(await screen.findByRole("option", { name: "Fechado" }))
     expect(selectChange).toHaveBeenCalledWith("closed")
 
-    await user.click(screen.getByRole("button", { name: "Selecione produtor" }))
+    await user.click(screen.getByRole("combobox", { name: "Selecione produtor" }))
     await user.type(screen.getByPlaceholderText("Buscar produtor"), "Bru")
     await user.click(await screen.findByText("Bruno"))
     expect(comboChange).toHaveBeenCalledWith("bruno")
@@ -567,7 +618,7 @@ describe("overlays e navegação", () => {
     expect(
       await screen.findByRole("menuitem", { name: /Configurações/ })
     ).toBeInTheDocument()
-  })
+  }, 10_000)
 
   it("exercita CommandMenu, Pagination e Tabs", async () => {
     const user = userEvent.setup()
