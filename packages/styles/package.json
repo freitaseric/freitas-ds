@@ -2,6 +2,11 @@
   "name": "@freitas-ds/styles",
   "version": "0.1.0",
   "type": "module",
+  "files": [
+    "src",
+    "README.md",
+    "package.json"
+  ],
   "exports": {
     "./index.css": "./src/index.css"
   },

@@ -1,21 +1,34 @@
 {
-  "name": "freitas-ds",
+  "name": "@freitas-ds/monorepo",
   "version": "0.1.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "pnpm --filter @freitas-ds/dashboard dev",
+    "dev": "pnpm build:plugin && pnpm --filter @freitas-ds/dashboard dev",
     "build": "pnpm -r build",
-    "storybook": "pnpm --filter storybook dev",
+    "storybook": "pnpm build:plugin && pnpm --filter storybook dev",
     "build:storybook": "pnpm --filter storybook build",
+    "build:plugin": "pnpm --filter freitas-ds build",
+    "dev:consumer": "pnpm build:plugin && pnpm --filter consumer-vite dev",
+    "build:consumer": "pnpm --filter consumer-vite build",
+    "typecheck:plugin": "pnpm --filter freitas-ds typecheck",
     "typecheck": "pnpm -r typecheck",
     "clean": "pnpm -r run clean",
     "lint": "biome lint .",
     "format": "biome format --write .",
     "check": "biome check .",
     "test": "pnpm --filter @freitas-ds/react test",
+    "test:plugin": "pnpm --filter freitas-ds test",
     "test:watch": "pnpm --filter @freitas-ds/react test:watch",
     "test:coverage": "pnpm --filter @freitas-ds/react test:coverage",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "pnpm build && changeset publish",
+    "pack:theme": "cd packages/theme && pnpm pack --dry-run",
+    "pack:styles": "cd packages/styles && pnpm pack --dry-run",
+    "pack:react": "cd packages/react && pnpm pack --dry-run",
+    "pack:plugin": "cd packages/tailwind-plugin && pnpm pack --dry-run",
+    "pack:all": "pnpm pack:theme && pnpm pack:styles && pnpm pack:react && pnpm pack:plugin",
     "quality": "pnpm check && pnpm typecheck && pnpm test && pnpm build",
     "quality:full": "pnpm check && pnpm typecheck && pnpm test && pnpm build && pnpm build:storybook"
   },
@@ -34,6 +47,7 @@
     }
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.5.0"
+    "@biomejs/biome": "^2.5.0",
+    "@changesets/cli": "^2.31.0"
   }
 }

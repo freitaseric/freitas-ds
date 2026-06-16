@@ -24,11 +24,7 @@ const config: StorybookConfig = {
       alias: {
         ...(config.resolve?.alias ?? {}),
         "@freitas-ds/react": path.resolve(root, "packages/react/src/index.ts"),
-        "@freitas-ds/theme": path.resolve(root, "packages/theme/src/index.ts"),
-        "@freitas-ds/styles/index.css": path.resolve(
-          root,
-          "packages/styles/src/index.css"
-        )
+        "@freitas-ds/theme": path.resolve(root, "packages/theme/src/index.ts")
       }
     }
     config.server = {

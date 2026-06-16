@@ -1,6 +1,7 @@
 import { FreitasProvider } from "@freitas-ds/react"
 import type { Preview } from "@storybook/react-vite"
-import "@freitas-ds/styles/index.css"
+
+import "../src/styles.css"
 
 const preview: Preview = {
   globalTypes: {

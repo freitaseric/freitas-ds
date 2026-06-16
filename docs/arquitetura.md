@@ -9,7 +9,8 @@ freitas-ds/
 ├── packages/
 │   ├── theme/
 │   ├── styles/
-│   └── react/
+│   ├── react/
+│   └── tailwind-plugin/
 ├── examples/
 │   └── dashboard/
 └── docs/
@@ -33,7 +34,7 @@ Esse pacote não deve depender de React. Ele precisa continuar utilizável por q
 
 ### `@freitas-ds/styles`
 
-Pacote de CSS base do Freitas DS.
+Pacote de CSS base legado do Freitas DS.
 
 Responsabilidades:
 
@@ -43,7 +44,21 @@ Responsabilidades:
 - definir tipografia;
 - fornecer estilos globais mínimos.
 
-Esse pacote deve concentrar a linguagem visual compartilhada que não pertence a um componente React específico.
+Esse pacote continua existindo para compatibilidade com consumidores que importam `@freitas-ds/styles/index.css`. Novas aplicações Tailwind v4 devem preferir o plugin `freitas-ds`.
+
+### `freitas-ds`
+
+Plugin Tailwind oficial do Freitas DS.
+
+Responsabilidades:
+
+- registrar CSS variables default;
+- registrar aliases de tema para classes como `bg-primary`, `text-on-surface`, `border-border` e `rounded-fds-md`;
+- aplicar base styles mínimos;
+- expor classes semânticas de tipografia;
+- integrar apps Tailwind v4 via `@plugin "freitas-ds"`.
+
+Esse pacote resolve a camada CSS/Tailwind. Ele não substitui o `FreitasProvider`, que continua responsável por aplicar tema dinâmico em runtime.
 
 ### `@freitas-ds/react`
 
@@ -87,6 +102,15 @@ Camada responsável por expor os valores do tema como CSS variables.
 
 Essas variáveis são a fonte de verdade visual consumida por estilos, utilities e componentes.
 
+Em apps Tailwind v4, essa camada deve ser carregada pelo plugin:
+
+```css
+@import "tailwindcss";
+@plugin "freitas-ds";
+```
+
+O pacote `@freitas-ds/styles` mantém o caminho antigo como compatibilidade.
+
 ### 3. Utilities Semânticas
 
 Camada responsável por transformar tokens em classes reutilizáveis.
@@ -98,3 +122,5 @@ Em vez de escrever valores soltos, as interfaces usam classes como `bg-primary`,
 Camada responsável por entregar blocos de interface prontos para uso.
 
 Os componentes devem compor as camadas anteriores e oferecer comportamento consistente, acessível e previsível.
+
+Quando o app consome `@freitas-ds/react` por workspace e o Tailwind não escaneia o pacote automaticamente, declare `@source` apontando para o pacote React. Nos exemplos do monorepo, isso aponta para `packages/react/src`.

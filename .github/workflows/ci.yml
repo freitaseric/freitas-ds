@@ -37,8 +37,26 @@ jobs:
       - name: Typecheck
         run: pnpm typecheck
 
+      - name: Typecheck Tailwind plugin
+        run: pnpm typecheck:plugin
+
       - name: Test
         run: pnpm test
 
+      - name: Test Tailwind plugin
+        run: pnpm test:plugin
+
       - name: Build packages
         run: pnpm build
+
+      - name: Build Tailwind plugin
+        run: pnpm build:plugin
+
+      - name: Build Storybook
+        run: pnpm build:storybook
+
+      - name: Build consumer app
+        run: pnpm build:consumer
+
+      - name: Pack packages
+        run: pnpm pack:all

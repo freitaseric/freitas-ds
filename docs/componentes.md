@@ -6,6 +6,33 @@ Componentes oficiais devem ser preferidos antes de criar soluções locais nas a
 
 Os componentes também podem ser visualizados e testados no Storybook do projeto, executando `pnpm storybook` na raiz do monorepo.
 
+## Consumo Em Aplicações
+
+Aplicações consumidoras Tailwind v4 devem carregar o plugin oficial no CSS principal e usar os componentes pelo entrypoint público do pacote React.
+
+```css
+@import "tailwindcss";
+@plugin "freitas-ds";
+```
+
+```tsx
+import { Button, FreitasProvider } from "@freitas-ds/react";
+
+export function Example() {
+      return (
+            <FreitasProvider theme={{ seed: "#2563eb", mode: "light" }}>
+                  <Button>Salvar</Button>
+            </FreitasProvider>
+      );
+}
+```
+
+O pacote `@freitas-ds/styles` ainda aceita `import "@freitas-ds/styles/index.css"` como compatibilidade legada. Não misture o CSS legado e `@plugin "freitas-ds"` no mesmo app sem motivo técnico documentado.
+
+Em consumo por workspace, pode ser necessário apontar `@source` para o pacote React para que o Tailwind gere as utilities usadas internamente pelos componentes. Os exemplos do monorepo usam `@source "../../../packages/react/src"`.
+
+O app `examples/consumer-vite` existe para validar esse consumo fora do dashboard e do Storybook.
+
 ## Fundação
 
 ### Button
@@ -50,7 +77,7 @@ export function Example() {
 
 ### FormField
 
-Composição recomendada para campos com label, texto de ajuda e erro.
+Composição recomendada para campos simples com label, texto de ajuda e erro, sem schema de validação.
 
 ```tsx
 import { FormField, Input } from "@freitas-ds/react";
@@ -63,6 +90,111 @@ export function Example() {
       );
 }
 ```
+
+### Campos Obrigatórios
+
+Todo campo obrigatório deve exibir um indicador visual ao lado do label.
+
+Use:
+
+```tsx
+<FormField label="Nome completo" required>
+      <Input />
+</FormField>
+```
+
+O Freitas DS exibirá um asterisco usando o token semântico de erro e manterá texto acessível para leitores de tela.
+
+## Formulários Avançados
+
+Use `Form` com TanStack Form e Zod quando o formulário tiver validação real, estado controlado, submissão administrativa ou persistência de dados.
+
+`FormField` continua sendo a opção simples para campos isolados ou formulários pequenos sem schema.
+
+### Form
+
+Provider leve para compartilhar a instância retornada por `useForm` do TanStack Form com os componentes do Freitas DS.
+
+### FormFieldController
+
+Conecta um campo do TanStack Form aos blocos visuais do Freitas DS.
+
+### FormItem, FormLabel, FormControl, FormDescription E FormMessage
+
+Composição acessível para label, controle, descrição e mensagem de erro. `FormControl` injeta `id`, `aria-describedby` e `aria-invalid` no controle filho. `FormMessage` exibe o erro de validação com `role="alert"`.
+
+```tsx
+import {
+      Button,
+      Form,
+      FormControl,
+      FormDescription,
+      FormFieldController,
+      FormItem,
+      FormLabel,
+      FormMessage,
+      getInputFieldProps,
+      Input,
+      useForm,
+} from "@freitas-ds/react";
+import { z } from "zod";
+
+type FormValues = {
+      name: string;
+};
+
+export function Example() {
+      const form = useForm({
+            defaultValues: {
+                  name: "",
+            } satisfies FormValues,
+            onSubmit: ({ value }) => {
+                  console.log(value);
+            },
+      });
+
+      return (
+            <Form form={form}>
+                  <form
+                        onSubmit={(event) => {
+                              event.preventDefault();
+                              event.stopPropagation();
+                              form.handleSubmit();
+                        }}
+                  >
+                        <FormFieldController
+                              name="name"
+                              validators={{
+                                    onSubmit: z.string().min(1, "Informe o nome."),
+                              }}
+                        >
+                              {(field) => (
+                                    <FormItem>
+                                          <FormLabel>Nome</FormLabel>
+                                          <FormControl>
+                                                <Input placeholder="Nome completo" {...getInputFieldProps(field)} />
+                                          </FormControl>
+                                          <FormDescription>Informe o nome do produtor.</FormDescription>
+                                          <FormMessage />
+                                    </FormItem>
+                              )}
+                        </FormFieldController>
+
+                        <Button type="submit">Salvar</Button>
+                  </form>
+            </Form>
+      );
+}
+```
+
+Helpers disponíveis para integração:
+
+- `getInputFieldProps`: `Input`, `Textarea` e `NativeSelect`;
+- `getSelectFieldProps`: `Select` e `Combobox`;
+- `getCheckboxFieldProps`: `Checkbox`;
+- `getRadioGroupFieldProps`: `RadioGroup`;
+- `getSwitchFieldProps`: `Switch`;
+- `getDatePickerFieldProps`: `DatePicker`.
 
 ### Input
 
@@ -117,6 +249,42 @@ export function Example() {
                   ]}
             />
       );
+}
+```
+
+### Calendar
+
+Calendário base para seleção de data em composições controladas.
+
+```tsx
+import { Calendar } from "@freitas-ds/react";
+
+export function Example() {
+      return <Calendar mode="single" />;
+}
+```
+
+### DatePicker
+
+Campo oficial para seleção de uma única data, exibida no formato brasileiro `dd/MM/yyyy`.
+
+```tsx
+import { DatePicker } from "@freitas-ds/react";
+
+export function Example() {
+      return <DatePicker placeholder="Data de atendimento" />;
+}
+```
+
+### DateRangePicker
+
+Campo oficial para seleção de período.
+
+```tsx
+import { DateRangePicker } from "@freitas-ds/react";
+
+export function Example() {
+      return <DateRangePicker placeholder="Período do relatório" />;
 }
 ```
 
@@ -180,6 +348,42 @@ export function Example() {
 }
 ```
 
+### Toast
+
+Notificação temporária para feedback rápido após uma ação do usuário.
+
+Use `Toaster` em uma região alta da árvore React e dispare notificações com `useToast`.
+
+```tsx
+import { Button, Toaster, useToast } from "@freitas-ds/react";
+
+function SaveButton() {
+      const { toast } = useToast();
+
+      return (
+            <Button
+                  onClick={() =>
+                        toast({
+                              title: "Cadastro salvo",
+                              description: "As informações foram registradas com sucesso.",
+                              tone: "success",
+                        })
+                  }
+            >
+                  Salvar
+            </Button>
+      );
+}
+
+export function App() {
+      return (
+            <Toaster>
+                  <SaveButton />
+            </Toaster>
+      );
+}
+```
+
 ### Spinner
 
 Indicador de carregamento em andamento.
@@ -196,7 +400,63 @@ Estado vazio com mensagem, descrição e possível ação.
 
 ### Table
 
-Tabela oficial para listagem de dados.
+Tabela base para marcação manual de linhas, cabeçalhos e células.
+
+Use quando a tela precisa de controle total da estrutura da tabela.
+
+### DataTable
+
+Tabela pronta baseada em dados e colunas declarativas.
+
+Use para listagens tabulares com API previsível de `columns` e `data`, células customizadas, loading, estado vazio, seleção de linhas, ordenação simples e clique em linha.
+
+```tsx
+import { DataTable, type DataTableColumn, StatusBadge } from "@freitas-ds/react";
+
+type Atendimento = {
+      id: string;
+      produtor: string;
+      status: "active" | "pending";
+};
+
+const columns: Array<DataTableColumn<Atendimento>> = [
+      { id: "id", header: "OS", accessor: "id", sortable: true },
+      { id: "produtor", header: "Produtor", accessor: "produtor" },
+      {
+            id: "status",
+            header: "Status",
+            cell: (row) => <StatusBadge status={row.status} />,
+      },
+];
+
+export function Example({ data }: { data: Atendimento[] }) {
+      return <DataTable columns={columns} data={data} getRowId={(row) => row.id} />;
+}
+```
+
+### DataView
+
+Padrão completo para telas administrativas de listagem.
+
+Use para compor cabeçalho, busca, filtros, ações, barra de seleção, conteúdo, estados de loading/erro/vazio e paginação.
+
+```tsx
+import { Button, DataTable, DataView } from "@freitas-ds/react";
+
+export function Example() {
+      return (
+            <DataView
+                  title="Produtores"
+                  description="Listagem administrativa de produtores rurais."
+                  search={{ placeholder: "Buscar produtor" }}
+                  actions={<Button>Novo produtor</Button>}
+                  pagination={{ page: 1, totalPages: 4 }}
+            >
+                  <DataTable columns={columns} data={data} getRowId={(row) => row.id} />
+            </DataView>
+      );
+}
+```
 
 ### Pagination
 
@@ -282,3 +542,6 @@ Menu pesquisável para ações globais.
 - Use `Select` para listas simples ou médias, sem busca.
 - Use `Combobox` para listas pesquisáveis.
 - Use `CommandMenu` para ações globais.
+- Use `Table` para controle manual total.
+- Use `DataTable` para dados tabulares declarativos.
+- Use `DataView` para telas administrativas completas de listagem.

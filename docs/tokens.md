@@ -4,6 +4,15 @@ Tokens são valores fundamentais usados para construir a interface. Eles represe
 
 O Freitas DS usa **tokens semânticos**, não valores visuais soltos. Isso significa que componentes e telas devem falar em papéis como `primary`, `surface`, `error` e `outline`, em vez de depender diretamente de cores fixas como `#2563eb`.
 
+Em apps Tailwind v4, carregue os tokens pelo plugin oficial:
+
+```css
+@import "tailwindcss";
+@plugin "freitas-ds";
+```
+
+O plugin registra os valores default, aliases semânticos, radius, tipografia e base styles. O `FreitasProvider` pode sobrescrever as CSS variables em runtime para aplicar seed color, tema manual e modo claro/escuro.
+
 ## Primary
 
 Usado para ações principais, destaques e elementos de maior prioridade.

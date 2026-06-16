@@ -164,3 +164,103 @@ pnpm build
 Use `pnpm quality` para validar o fluxo principal e `pnpm quality:full` quando a validação também precisar incluir o build do Storybook.
 
 Nenhum componente oficial deve ficar sem teste e sem exemplo visual correspondente no Storybook. Correções de bug devem incluir teste de regressão sempre que o comportamento puder ser reproduzido em jsdom.
+
+## 14. Releases Devem Usar Changesets
+
+Mudanças publicáveis em `@freitas-ds/theme`, `@freitas-ds/styles` ou `@freitas-ds/react` devem ter changeset correspondente antes de versionar pacotes.
+
+Use `pnpm changeset` para registrar a intenção de release, `pnpm version-packages` para aplicar versões e changelogs, e `pnpm pack:all` para validar o conteúdo dos pacotes sem publicar.
+
+Não execute `pnpm release` sem aprovação explícita.
+
+## 15. Validar Consumo Real
+
+Alterações em exports públicos, empacotamento ou CSS global devem manter o app consumidor de referência funcionando.
+
+Antes de abrir release, rode:
+
+```bash
+pnpm build:consumer
+pnpm pack:all
+```
+
+## 16. Integração Tailwind
+
+Novas aplicações Tailwind v4 devem preferir o plugin oficial no CSS principal:
+
+```css
+@import "tailwindcss";
+@plugin "freitas-ds";
+```
+
+Não importe `@freitas-ds/styles/index.css` quando o plugin já estiver em uso, salvo motivo técnico documentado.
+
+O `FreitasProvider` continua obrigatório para tema dinâmico em runtime.
+
+Em consumo via workspace, declare `@source` para `@freitas-ds/react` quando o Tailwind não escanear as classes internas do pacote React automaticamente.
+
+## 17. Feedback Temporário Com Toast
+
+Use `Toast` para feedback temporário depois de uma ação, como salvar, copiar, exportar ou concluir uma operação assíncrona.
+
+Use `Alert` para mensagens persistentes na tela, especialmente quando a informação precisa continuar visível enquanto o usuário decide o próximo passo.
+
+Use `AlertDialog` para confirmar ações críticas, destrutivas ou irreversíveis.
+
+Não use `Toast` para erro que exige correção imediata em formulário. Nesses casos, mostre o erro junto ao campo ou à seção afetada.
+
+## 18. Seleção De Datas
+
+Use `DatePicker` para seleção de uma data única.
+
+Use `DateRangePicker` para seleção de período.
+
+Não use `Input` manual para datas quando `DatePicker` estiver disponível, salvo em integrações técnicas específicas em que a digitação livre seja obrigatória.
+
+Interfaces em pt-BR devem exibir datas no formato `dd/MM/yyyy`.
+
+## 19. Listagens Administrativas
+
+Use `DataView` para telas administrativas completas com cabeçalho, busca, filtros, ações, estado vazio, loading, erro, seleção e paginação.
+
+Use `DataTable` quando houver dados tabulares com colunas declarativas, células customizadas, seleção de linhas ou ordenação simples.
+
+Use `Table` quando precisar de controle manual total sobre marcação, agrupamentos, rodapé ou composição da tabela.
+
+Não recrie barras de busca, filtros, action bars e paginação localmente quando `DataView` puder compor esses padrões com os componentes oficiais.
+
+## 20. Formulários Validados
+
+Use `Form` + TanStack Form + Zod para formulários com validação real, submissão administrativa ou persistência de dados.
+
+Use `FormField` simples para campos isolados ou formulários pequenos sem schema.
+
+Todo formulário administrativo que salva dados deve ter validação explícita.
+
+Mensagens de erro devem ser específicas, visíveis e associadas ao controle com `aria-describedby`.
+
+Controles inválidos devem receber `aria-invalid` por meio de `FormControl`.
+
+## 21. Campos Obrigatórios
+
+Todo campo marcado como `required` deve exibir feedback visual de obrigatoriedade ao lado do label.
+
+O padrão oficial é um asterisco usando token semântico de erro.
+
+Errado:
+
+```tsx
+<FormField label="Nome completo">
+      <Input required />
+</FormField>
+```
+
+Certo:
+
+```tsx
+<FormField label="Nome completo" required>
+      <Input />
+</FormField>
+```
+
+Não use apenas placeholder, cor ou texto de ajuda para indicar obrigatoriedade.
