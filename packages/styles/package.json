@@ -1,6 +1,28 @@
 {
   "name": "@freitas-ds/styles",
   "version": "0.1.0",
+  "description": "CSS base legado e tokens semânticos do Freitas DS.",
+  "keywords": [
+    "design-system",
+    "css",
+    "tailwindcss",
+    "tokens"
+  ],
+  "author": {
+    "name": "Eric Freitas Sampaio",
+    "email": "contato@freitaseric.com",
+    "url": "https://freitaseric.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/freitaseric/freitas-ds.git",
+    "directory": "packages/styles"
+  },
+  "homepage": "https://github.com/freitaseric/freitas-ds#readme",
+  "bugs": {
+    "url": "https://github.com/freitaseric/freitas-ds/issues"
+  },
   "type": "module",
   "files": [
     "src",
@@ -9,6 +31,10 @@
   ],
   "exports": {
     "./index.css": "./src/index.css"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
     "build": "echo \"No build needed for @freitas-ds/styles\"",

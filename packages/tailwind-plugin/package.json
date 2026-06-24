@@ -1,6 +1,29 @@
 {
   "name": "freitas-ds",
   "version": "0.1.0",
+  "description": "Plugin Tailwind CSS v4 oficial do Freitas DS.",
+  "keywords": [
+    "design-system",
+    "tailwindcss",
+    "plugin",
+    "theme",
+    "tokens"
+  ],
+  "author": {
+    "name": "Eric Freitas Sampaio",
+    "email": "contato@freitaseric.com",
+    "url": "https://freitaseric.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/freitaseric/freitas-ds.git",
+    "directory": "packages/tailwind-plugin"
+  },
+  "homepage": "https://github.com/freitaseric/freitas-ds#readme",
+  "bugs": {
+    "url": "https://github.com/freitaseric/freitas-ds/issues"
+  },
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
@@ -12,10 +35,18 @@
       "require": "./dist/index.cjs"
     }
   },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "package.json"
   ],
   "scripts": {
+    "prepack": "pnpm build",
+    "prepublishOnly": "pnpm typecheck && pnpm test",
     "build": "tsdown",
     "test": "pnpm build && node scripts/test-import.mjs",
     "typecheck": "tsc --noEmit",

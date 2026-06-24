@@ -2,19 +2,6 @@
 
 Todas as mudanças notáveis deste projeto serão documentadas aqui.
 
-## Unreleased
-
-### Adicionado
-
-- Sistema oficial de notificações temporárias com `Toast`, `Toaster` e `useToast`.
-- Componentes oficiais `Calendar`, `DatePicker` e `DateRangePicker` para seleção de datas.
-- Componentes `DataView` e `DataTable` para telas administrativas e tabelas declarativas.
-- Camada avançada de formulários com `Form`, `FormFieldController`, helpers de integração, TanStack Form e Zod.
-- Plugin Tailwind `freitas-ds` para uso via `@plugin "freitas-ds"`.
-- Novo fluxo recomendado de instalação CSS pelo arquivo principal da aplicação.
-- Compatibilidade mantida com `@freitas-ds/styles/index.css` para consumidores existentes.
-- Padronizado indicador visual e acessível para campos obrigatórios.
-
 ## 0.1.0
 
 Versão inicial experimental do Freitas DS.
@@ -34,5 +21,13 @@ Versão inicial experimental do Freitas DS.
 - Componentes de overlay.
 - Componentes utilitários.
 - Command Menu.
+- Sistema oficial de notificações temporárias com `Toast`, `Toaster` e `useToast`.
+- Componentes oficiais `Calendar`, `DatePicker` e `DateRangePicker` para seleção de datas.
+- Componentes `DataView` e `DataTable` para telas administrativas e tabelas declarativas.
+- Camada avançada de formulários com `Form`, `FormFieldController`, helpers de integração, TanStack Form e Zod.
+- Plugin Tailwind `freitas-ds` para uso via `@plugin "freitas-ds"`.
+- Compatibilidade com `@freitas-ds/styles/index.css` para consumidores existentes.
+- Indicador visual e acessível para campos obrigatórios.
 - Exemplo dashboard em `examples/dashboard`.
+- Exemplo mínimo de aplicação consumidora em `examples/consumer-vite`.
 - Documentação inicial em `docs/`.

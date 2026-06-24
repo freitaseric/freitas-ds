@@ -124,6 +124,31 @@ Para validar o conteúdo que seria publicado sem publicar nada:
 pnpm pack:all
 ```
 
+## Publicação
+
+Os quatro pacotes públicos usam o registro oficial do npm e já configuram acesso público, inclusive os pacotes com escopo `@freitas-ds`.
+
+Antes da primeira publicação, autentique-se e confirme que sua conta possui permissão para publicar no escopo `@freitas-ds`:
+
+```bash
+pnpm login
+pnpm whoami
+```
+
+Com a branch `main` limpa e sincronizada com o remoto, publique todos os pacotes com um único comando:
+
+```bash
+pnpm publish:packages
+```
+
+O comando executa lint, typecheck, testes, builds, validação do consumidor e inspeção dos tarballs antes de publicar. Para apenas simular a etapa final do pnpm:
+
+```bash
+pnpm -r --filter './packages/*' publish --dry-run --no-git-checks
+```
+
+O comando nativo `pnpm publish` sem `-r` atua apenas no pacote da raiz; por isso a publicação do monorepo usa o script `publish:packages`.
+
 ## Formulários Avançados
 
 O pacote React inclui uma camada oficial para TanStack Form + Zod. Use `Form`, `FormFieldController`, `FormControl` e `FormMessage` em formulários administrativos com validação real. Para campos simples sem schema, `FormField` continua disponível.

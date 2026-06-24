@@ -1,6 +1,29 @@
 {
   "name": "@freitas-ds/react",
   "version": "0.1.0",
+  "description": "Componentes React acessíveis e tematizáveis do Freitas DS.",
+  "keywords": [
+    "design-system",
+    "react",
+    "components",
+    "accessibility",
+    "tailwindcss"
+  ],
+  "author": {
+    "name": "Eric Freitas Sampaio",
+    "email": "contato@freitaseric.com",
+    "url": "https://freitaseric.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/freitaseric/freitas-ds.git",
+    "directory": "packages/react"
+  },
+  "homepage": "https://github.com/freitaseric/freitas-ds#readme",
+  "bugs": {
+    "url": "https://github.com/freitaseric/freitas-ds/issues"
+  },
   "type": "module",
   "main": "./dist/index.mjs",
   "module": "./dist/index.mjs",
@@ -16,7 +39,13 @@
       "import": "./dist/index.mjs"
     }
   },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
+    "prepack": "pnpm build",
+    "prepublishOnly": "pnpm typecheck && pnpm test",
     "build": "tsdown",
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf dist",

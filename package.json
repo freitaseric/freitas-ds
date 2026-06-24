@@ -24,6 +24,8 @@
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "pnpm build && changeset publish",
+    "release:check": "pnpm check && pnpm typecheck && pnpm test && pnpm test:plugin && pnpm build && pnpm build:consumer && pnpm pack:all",
+    "publish:packages": "pnpm release:check && pnpm -r --filter './packages/*' publish",
     "pack:theme": "cd packages/theme && pnpm pack --dry-run",
     "pack:styles": "cd packages/styles && pnpm pack --dry-run",
     "pack:react": "cd packages/react && pnpm pack --dry-run",
@@ -33,6 +35,14 @@
     "quality:full": "pnpm check && pnpm typecheck && pnpm test && pnpm build && pnpm build:storybook"
   },
   "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/freitaseric/freitas-ds.git"
+  },
+  "homepage": "https://github.com/freitaseric/freitas-ds#readme",
+  "bugs": {
+    "url": "https://github.com/freitaseric/freitas-ds/issues"
+  },
   "author": {
     "name": "Eric Freitas Sampaio",
     "email": "contato@freitaseric.com",
@@ -43,7 +53,7 @@
     "packageManager": {
       "name": "pnpm",
       "version": "^11.3.0",
-      "onFail": "download"
+      "onFail": "warn"
     }
   },
   "devDependencies": {
