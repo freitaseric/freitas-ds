@@ -107,6 +107,7 @@ Em apps Tailwind v4, essa camada deve ser carregada pelo plugin:
 ```css
 @import "tailwindcss";
 @plugin "freitas-ds";
+@import "freitas-ds/react.css";
 ```
 
 O pacote `@freitas-ds/styles` mantém o caminho antigo como compatibilidade.
@@ -123,4 +124,4 @@ Camada responsável por entregar blocos de interface prontos para uso.
 
 Os componentes devem compor as camadas anteriores e oferecer comportamento consistente, acessível e previsível.
 
-Quando o app consome `@freitas-ds/react` por workspace e o Tailwind não escaneia o pacote automaticamente, declare `@source` apontando para o pacote React. Nos exemplos do monorepo, isso aponta para `packages/react/src`.
+Como o Tailwind CSS v4 não escaneia automaticamente pacotes compilados em `node_modules`, o pacote `freitas-ds` publica `react.css`: uma folha de utilities gerada a partir dos componentes React. Apps consumidores devem importar `freitas-ds/react.css` junto do plugin para que `@freitas-ds/react` renderize estilizado sem depender de `@source`.

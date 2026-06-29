@@ -22,7 +22,15 @@ No CSS principal da aplicação:
 ```css
 @import "tailwindcss";
 @plugin "freitas-ds";
+@import "freitas-ds/react.css";
 ```
+
+O Tailwind CSS v4 não escaneia automaticamente pacotes compilados dentro de
+`node_modules`. Por isso, `freitas-ds/react.css` entrega uma camada oficial de
+utilities dos componentes React, gerada a partir de `@freitas-ds/react`, para
+que classes como `bg-primary`, `text-on-primary`, `rounded-fds-md`, `h-10`,
+variantes `hover:*`, `focus-visible:*` e `data-*` entrem no CSS final do app
+consumidor sem `@source`.
 
 No React, envolva a aplicação com o provider:
 
@@ -87,6 +95,7 @@ Use o plugin Tailwind no CSS principal e consuma os componentes pelo pacote Reac
 ```css
 @import "tailwindcss";
 @plugin "freitas-ds";
+@import "freitas-ds/react.css";
 ```
 
 ```tsx
@@ -101,13 +110,15 @@ export function App() {
 }
 ```
 
-Em consumo via workspace, quando o Tailwind não escanear automaticamente as classes internas de `@freitas-ds/react`, adicione uma fonte explícita para o pacote React:
+Para apps publicados ou externos, `@import "freitas-ds/react.css";` é o caminho recomendado. Ele evita que o app precise escanear `node_modules/@freitas-ds/react/dist`.
+
+Em desenvolvimento dentro do monorepo, se você optar por não importar `freitas-ds/react.css`, a alternativa de diagnóstico é apontar a fonte explícita para o código fonte local:
 
 ```css
-@source "../node_modules/@freitas-ds/react";
+@source "../../../packages/react/src";
 ```
 
-No monorepo, os exemplos usam `@source "../../../packages/react/src"` porque consomem o pacote React direto do workspace.
+O `FreitasProvider` apenas aplica o tema em runtime e não gera utilities CSS.
 
 O import `@freitas-ds/styles/index.css` continua disponível como caminho legado/compatibilidade, mas novos apps Tailwind v4 devem preferir `@plugin "freitas-ds"`.
 
@@ -186,7 +197,7 @@ pnpm build:storybook
 
 ## Versão Atual
 
-`0.1.0` - versão inicial experimental.
+`0.2.0` - CSS oficial dos componentes React para consumo Tailwind v4 sem `@source`.
 
 ## Status
 

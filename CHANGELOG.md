@@ -2,6 +2,19 @@
 
 Todas as mudanças notáveis deste projeto serão documentadas aqui.
 
+## 0.2.0
+
+### Adicionado
+
+- CSS oficial dos componentes React em `freitas-ds/react.css`, gerado no build do plugin Tailwind.
+- Export público `freitas-ds/react.css` para apps consumidores Tailwind v4.
+- Exemplo Vite consumidor validando `@freitas-ds/react` sem `@source`.
+
+### Alterado
+
+- A instalação recomendada agora usa `@import "freitas-ds/react.css";` junto de `@plugin "freitas-ds";`.
+- A documentação explica que o Tailwind CSS v4 não escaneia `node_modules/@freitas-ds/react/dist` automaticamente, e que `react.css` é a camada oficial para cobrir essa limitação.
+
 ## 0.1.0
 
 Versão inicial experimental do Freitas DS.

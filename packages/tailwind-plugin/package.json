@@ -1,6 +1,6 @@
 {
   "name": "freitas-ds",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "description": "Plugin Tailwind CSS v4 oficial do Freitas DS.",
   "keywords": [
     "design-system",
@@ -33,7 +33,8 @@
       "types": "./dist/index.d.mts",
       "import": "./dist/index.mjs",
       "require": "./dist/index.cjs"
-    }
+    },
+    "./react.css": "./dist/react.css"
   },
   "publishConfig": {
     "access": "public",
@@ -47,7 +48,7 @@
   "scripts": {
     "prepack": "pnpm build",
     "prepublishOnly": "pnpm typecheck && pnpm test",
-    "build": "tsdown",
+    "build": "tsdown && node scripts/build-react-css.mjs",
     "test": "pnpm build && node scripts/test-import.mjs",
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf dist"
@@ -56,7 +57,9 @@
     "tailwindcss": ">=4"
   },
   "devDependencies": {
+    "@tailwindcss/node": "^4.3.1",
     "tailwindcss": "^4.3.1",
+    "tinyglobby": "^0.2.15",
     "tsdown": "^0.22.2",
     "typescript": "^6.0.3"
   }

@@ -191,13 +191,14 @@ Novas aplicações Tailwind v4 devem preferir o plugin oficial no CSS principal:
 ```css
 @import "tailwindcss";
 @plugin "freitas-ds";
+@import "freitas-ds/react.css";
 ```
 
 Não importe `@freitas-ds/styles/index.css` quando o plugin já estiver em uso, salvo motivo técnico documentado.
 
 O `FreitasProvider` continua obrigatório para tema dinâmico em runtime.
 
-Em consumo via workspace, declare `@source` para `@freitas-ds/react` quando o Tailwind não escanear as classes internas do pacote React automaticamente.
+Apps que consomem `@freitas-ds/react` devem importar `freitas-ds/react.css`. Essa é a camada oficial de utilities dos componentes React e evita depender de `@source` para escanear `node_modules`.
 
 ## 17. Feedback Temporário Com Toast
 

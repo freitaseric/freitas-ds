@@ -1,6 +1,6 @@
 {
   "name": "@freitas-ds/monorepo",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -49,13 +49,6 @@
     "url": "https://freitaseric.com"
   },
   "license": "MIT",
-  "devEngines": {
-    "packageManager": {
-      "name": "pnpm",
-      "version": "^11.3.0",
-      "onFail": "warn"
-    }
-  },
   "devDependencies": {
     "@biomejs/biome": "^2.5.0",
     "@changesets/cli": "^2.31.0"

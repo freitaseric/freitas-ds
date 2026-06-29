@@ -13,7 +13,14 @@ No CSS principal:
 ```css
 @import "tailwindcss";
 @plugin "freitas-ds";
+@import "freitas-ds/react.css";
 ```
+
+O Tailwind CSS v4 não escaneia automaticamente arquivos compilados em
+`node_modules`. O import `freitas-ds/react.css` entrega a camada oficial de
+utilities usadas internamente pelos componentes React, incluindo tokens
+semânticos, espaçamentos, raios e variantes `hover:*`, `focus-visible:*` e
+`data-*`, sem exigir `@source` no app consumidor.
 
 Na aplicação:
 

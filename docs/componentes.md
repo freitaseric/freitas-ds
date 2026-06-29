@@ -13,6 +13,7 @@ Aplicações consumidoras Tailwind v4 devem carregar o plugin oficial no CSS pri
 ```css
 @import "tailwindcss";
 @plugin "freitas-ds";
+@import "freitas-ds/react.css";
 ```
 
 ```tsx
@@ -29,7 +30,7 @@ export function Example() {
 
 O pacote `@freitas-ds/styles` ainda aceita `import "@freitas-ds/styles/index.css"` como compatibilidade legada. Não misture o CSS legado e `@plugin "freitas-ds"` no mesmo app sem motivo técnico documentado.
 
-Em consumo por workspace, pode ser necessário apontar `@source` para o pacote React para que o Tailwind gere as utilities usadas internamente pelos componentes. Os exemplos do monorepo usam `@source "../../../packages/react/src"`.
+O import `freitas-ds/react.css` é necessário para componentes React porque o Tailwind CSS v4 não escaneia automaticamente `node_modules/@freitas-ds/react/dist`. Essa folha é gerada pelo pacote `freitas-ds` e contém as utilities Tailwind usadas internamente por `@freitas-ds/react`.
 
 O app `examples/consumer-vite` existe para validar esse consumo fora do dashboard e do Storybook.
 

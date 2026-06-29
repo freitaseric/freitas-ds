@@ -44,7 +44,7 @@ export function SidebarBrand({
   return (
     <div className={cn("flex min-w-0 items-center gap-3", className)} {...props}>
       {icon ? (
-        <div className="flex size-9 shrink-0 items-center justify-center rounded-fds-md bg-primary text-on-primary">
+        <div className="flex size-9 shrink-0 items-center justify-center rounded-fds-md">
           {icon}
         </div>
       ) : null}
